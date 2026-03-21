@@ -1,0 +1,42 @@
+# Here we declare the model information. You can add your Hugging Face token
+# if your model or dataset is private.
+shared:
+  hf_token: ''
+  device: cpu
+  task_name: sst2
+  model_name: Qwen/Qwen2.5-0.5B
+  attn_implementation: sdpa
+  target_modules:
+  - q_proj
+  - k_proj
+  - v_proj
+  - o_proj
+  - gate_proj
+  - up_proj
+  - down_proj
+
+
+# Similar to GradCut, we declare the saving directories to keep consistency.
+# Replace '/your/path' with your own directory.
+patch:
+  alpha_multiplier: 2
+  initial_patch_path: "/your/path/patches_initial/gradcut_phase2_outputs"
+  patch_output_template: "/your/path/sequence/patches/gradcut_phase2_outputs_{step:02}"
+
+# Here are some hyperparameters that let you control the retuning level.
+# Reducing `kappa` can make your policy more conservative, depending on your requirements.
+# Similarly, adjusting `k_var` will also affect the retuning frequency.
+# You can tune them to balance accuracy and efficiency.
+selection:
+  kappa: 0.5
+  k_var: 0.25
+  max_seq: 5
+paths:
+  local_model_template: "/your/path/sequence/local_thetat_{step:02}"
+  merged_dir_template: "/your/path/sequence/merged/gradcut_phase2_{step:02}_art"
+
+# We provide a flag: when retune_policy reaches a fine-tuning point, it will automatically run GradCut phase1+2 there
+# You can disable this if you already have the fine-tuned patches ready.
+execution:
+  auto_run_gradcut_on_ft_points: true
+  gradcut_config: "../GradCut/config.yaml"

@@ -1,0 +1,110 @@
+# We declare some model configurations here. You can adjust them
+# based on your task and performance requirements.
+global:
+  seed: 0
+  base_model_name: "Qwen/Qwen2.5-0.5B"
+  layer_depth: 24
+  tokenizer_padding_side: "left"
+  attn_implementation: "sdpa"
+  device_map: "auto"
+  sliding_window: null
+  layer_index_position_in_name: 2
+
+# We save the initial patch0 in: /your/path/patches_initial/
+# For the sequence of models in /your/path/sequence/local_thetat_{step:02},
+# we save the corresponding patch in /your/path/sequence/patches/
+# replace '/your/path' with your own directory for saving models.
+paths:
+  patch0:
+    phase1_output_dir: "/your/path/patches_initial/gradcut_phase1_outputs"
+    phase2_output_dir: "/your/path/patches_initial/gradcut_phase2_outputs"
+  templates:
+    model_name: "/your/path/sequence/local_thetat_{step:02}"
+    phase1_output_dir: "/your/path/sequence/patches/gradcut_phase1_outputs_{step:02}"
+    phase2_output_dir: "/your/path/sequence/patches/gradcut_phase2_outputs_{step:02}"
+
+# This is an example dataset task. You can change it to a different task
+# with a different prompt based on your requirements.
+dataset:
+  name: "glue"
+  subset: "sst2"
+  instruction_text: "You are an AI assistant that only answers negative/positive."
+
+
+# In phase1, several hyperparameters can be adjusted to meet specific performance requirements.
+# For example, you can adjust the target modules and the number of LoRA associations for each module.
+# Here we provide one example; you can increase or decrease `type_to_keep` to balance efficiency and accuracy.
+# You can also change the trainer configuration to adapt to your resource constraints.
+phase1:
+  model:
+    r: 16
+    lora_alpha: 32
+    lora_dropout: 0.1
+    target_modules:
+      - "q_proj"
+      - "k_proj"
+      - "v_proj"
+      - "o_proj"
+      - "gate_proj"
+      - "up_proj"
+      - "down_proj"
+  pruning:
+    initial_full_activation_steps: 5
+    prune_step: 3
+    prune_interval: 10
+    importance_weight: 1
+    cost_weight: 2
+    type_to_keep:
+      q_proj: 18
+      k_proj: 18
+      v_proj: 18
+      o_proj: 18
+      gate_proj: 14
+      up_proj: 14
+      down_proj: 14
+  trainer:
+    max_seq_length: 512
+    dataset_num_proc: 2
+    per_device_train_batch_size: 4
+    save_steps: 0
+    save_strategy: "no"
+    learning_rate: 5.0e-5
+    logging_steps: 500
+    optim: "adamw_8bit"
+    lr_scheduler_type: "linear"
+    seed: 3407
+    save_total_limit: 0
+    report_to: "none"
+
+
+# In phase 2, similar to phase 1, you can adjust these hyperparameters
+# to balance accuracy and efficiency.
+phase2:
+  final_model:
+    dedicated_r: 4
+    threshold_T: 0.25
+    ignore_threshold_std_multiplier: 2
+    dedicated_lora_alpha_multiplier: 2
+    dedicated_lora_dropout: 0.1
+    target_modules:
+      - "q_proj"
+      - "k_proj"
+      - "v_proj"
+      - "o_proj"
+      - "gate_proj"
+      - "up_proj"
+      - "down_proj"
+  trainer:
+    max_seq_length: 512
+    dataset_num_proc: 2
+    per_device_train_batch_size: 32
+    save_steps: 0
+    num_train_epochs: 4
+    save_strategy: "no"
+    learning_rate: 5.0e-5
+    logging_steps: 500
+    optim: "adamw_8bit"
+    lr_scheduler_type: "linear"
+    seed: 3407
+    save_total_limit: 0
+    report_to: "none"
