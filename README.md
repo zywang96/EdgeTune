@@ -30,10 +30,10 @@ Important items to check:
 
 By default, the code assumes:
 
-- the initial patch is saved under `/your/path/patches_initial/`
-- local models are under `/your/path/sequence/local_thetat_{step:02}`
-- generated patches are saved under `/your/path/sequence/patches/`
-- Replace `/your/path` with your own directory.
+- the initial patch will be saved under `/your/path/patches_initial/`
+- the sequence of your local base models should be placed under `/your/path/sequence/local_thetat_{step:02}`
+- generated patches will be saved under `/your/path/sequence/patches/`
+- replace `/your/path` with your own directory.
 
 Make sure these paths match your local setup.
 
