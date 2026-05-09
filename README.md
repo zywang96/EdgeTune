@@ -138,17 +138,17 @@ This script will:
 If you find our work helpful, please consider citing it as follows.
 ```
 @inproceedings{edgetune2026wang,
-author = {Wang, Zhenyu and Khan, Rana Muhammad Shahroz and Chen, Tianlong and Nirjon, Shahriar},
-title = {EdgeTune: Efficient On-Device LLM Personalization at the Edge},
-year = {2026},
-isbn = {9798400723094},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-url = {https://doi.org/10.1145/3774906.3802769},
-doi = {10.1145/3774906.3802769},
-booktitle = {Proceedings of the 2026 ACM/IEEE International Conference on Embedded Artificial Intelligence and Sensing Systems},
-pages = {421–437},
-numpages = {17},
-series = {SenSys '26}
+    author = {Wang, Zhenyu and Khan, Rana Muhammad Shahroz and Chen, Tianlong and Nirjon, Shahriar},
+    title = {EdgeTune: Efficient On-Device LLM Personalization at the Edge},
+    year = {2026},
+    isbn = {9798400723094},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    url = {https://doi.org/10.1145/3774906.3802769},
+    doi = {10.1145/3774906.3802769},
+    booktitle = {Proceedings of the 2026 ACM/IEEE International Conference on Embedded Artificial Intelligence and Sensing Systems},
+    pages = {421–437},
+    numpages = {17},
+    series = {SenSys '26}
 }
 ```
