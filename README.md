@@ -1,5 +1,7 @@
 # EdgeTune: Efficient On-Device LLM Personalization at the Edge
 
+![edgetune](images/introduction.png)
+
 This repository contains the core code for **EdgeTune**. EdgeTune is designed for **on-device LLM personalization** on resource-constrained edge platforms such as smartphones and embedded GPUs. 
 We introduce two key ideas:
 
