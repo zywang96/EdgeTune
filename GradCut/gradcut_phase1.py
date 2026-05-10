@@ -181,6 +181,7 @@ def get_phase1_paths(curr_step):
 
 
 def load_phase1_model_and_tokenizer(model_name):
+    #Adjust architecture-specific options such as sliding_window and attn_implementation for different model families.
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     config = AutoConfig.from_pretrained(model_name)
     config.sliding_window = CONFIG["global"]["sliding_window"]
