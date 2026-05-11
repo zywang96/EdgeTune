@@ -99,7 +99,7 @@ def build_config(model_name: str):
 
 
 def load_model(model_path: str, runtime: dict, device_map="cpu", torch_dtype=None):
-    #Adjust architecture-specific options such as sliding_window and attn_implementation for different model families. Make the corresponding adjustments in build_config as well.
+    #Adjust architecture-specific options such as sliding_window and attn_implementation for different model families. Add or remove options as needed. Make the corresponding adjustments in build_config as well.
     kwargs = {
         "config": build_config(runtime["model_name"]),
         "device_map": device_map,
