@@ -33,7 +33,7 @@ def load_phase2_artifacts(model_name, save_dir):
     shared_lora_state = torch.load(f"{save_dir}/shared_lora_dict.pt")
 
     config = AutoConfig.from_pretrained(model_name)
-    #Adjust architecture-specific options such as sliding_window and attn_implementation for different model families.
+    #Adjust architecture-specific options such as sliding_window and attn_implementation for different model families. Add or remove options as needed.
     config.sliding_window = CONFIG["global"]["sliding_window"]
     base_model = AutoModelForCausalLM.from_pretrained(
         model_name,
